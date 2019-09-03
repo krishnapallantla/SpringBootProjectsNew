@@ -1,11 +1,8 @@
 package com.krishna.springassignment.boot.response;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 
-  //@XmlRootElement(name="Response")
 @JsonRootName(value="Response")
 public class SuccessResponse implements
   Response {

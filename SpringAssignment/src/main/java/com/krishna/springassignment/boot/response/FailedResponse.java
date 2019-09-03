@@ -1,7 +1,5 @@
 package com.krishna.springassignment.boot.response;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 

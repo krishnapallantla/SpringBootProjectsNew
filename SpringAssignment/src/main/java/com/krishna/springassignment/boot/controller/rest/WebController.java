@@ -19,14 +19,14 @@ import com.krishna.springassignment.boot.service.NumToWordImpl;
 
 @RestController
 @Service
-public strictfp class WebController {
+public class WebController {
 
 	@Autowired
 	NumToWord serviceObj;
 
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);	
 	
-	@GetMapping(value="/api/num/{num}", produces={"application/json"})
+	@GetMapping(value="/api/num/{num:.+}", produces={"application/json"})
 	public Response getWord(@PathVariable("num") String num) {
 	
 	LOG.info("received request for "+ "http://localhost:8081/api/num/="+num);
@@ -47,7 +47,7 @@ public strictfp class WebController {
 			
 	}
 	
-	@GetMapping(value="/api/nums/{num}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/api/nums/{num:.+}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Response> getWords(@PathVariable("num") String nums) {
 		
 		LOG.trace("received request for "+ "http://localhost:8081/api/nums/="+nums);

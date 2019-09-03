@@ -6,10 +6,8 @@ public class InvalidValueException extends Exception {
 	
 	@Override
 	public String getMessage() {
-		// TODO Auto-generated method stub
-		//return super.getMessage();
-		
-		return "Input is expected between 0 and 999999999";
+
+		return "Number not in the range";
 	}
 
 }

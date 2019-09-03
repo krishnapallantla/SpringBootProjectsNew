@@ -1,7 +1,6 @@
 package com.krishna.springassignment;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -113,7 +112,7 @@ public class SpringAssignmentApplicationTests {
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/nums/-555557").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[{\"num\":\"-555557\",\"word\":\"Input is expected between 0 and 999999999\"}]")));
+                .andExpect(content().string(equalTo("[{\"num\":\"-555557\",\"word\":\"Number not in the range 0 and 999999999\"}]")));
 	}
 	
 	/*Test for closest not allowed higher boundary*/
@@ -126,7 +125,7 @@ public class SpringAssignmentApplicationTests {
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/nums/1000000000").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[{\"num\":\"1000000000\",\"word\":\"Input is expected between 0 and 999999999\"}]")));
+                .andExpect(content().string(equalTo("[{\"num\":\"1000000000\",\"word\":\"Number not in the range 0 and 999999999\"}]")));
 	}
 
 	/*Test for closest not allowed lower boundary -1 */
@@ -139,7 +138,7 @@ public class SpringAssignmentApplicationTests {
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/nums/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[{\"num\":\"-1\",\"word\":\"Input is expected between 0 and 999999999\"}]")));
+                .andExpect(content().string(equalTo("[{\"num\":\"-1\",\"word\":\"Number not in the range 0 and 999999999\"}]")));
 	}
 	
 	
@@ -170,17 +169,17 @@ public class SpringAssignmentApplicationTests {
 	}
 	
 	/*Test for least allowed boundary 0*/
-	/*
-	 * @Test public void testNonIntegerNumber() throws Exception {
-	 * 
-	 * MvcResult r = mockMvc.perform(MockMvcRequestBuilders
-	 * .get("/api/nums/123.3434") .accept(MediaType.APPLICATION_JSON)).andReturn();
-	 * 
-	 * mockMvc.perform(MockMvcRequestBuilders.get("/api/nums/123.3434").accept(
-	 * MediaType.APPLICATION_JSON)) .andExpect(status().isOk())
-	 * .andExpect(content().string(
-	 * equalTo("[{\"num\":\"123.3434\",\"word\":\"not a valid number\"}]"))); }
-	 */
+	
+	  @Test public void testNonIntegerNumber() throws Exception {
+	  
+	  MvcResult r = mockMvc.perform(MockMvcRequestBuilders
+	  .get("/api/num/123.3434") .accept(MediaType.APPLICATION_JSON)).andReturn();
+	  
+	  mockMvc.perform(MockMvcRequestBuilders.get("/api/num/123.3434").accept(
+	  MediaType.APPLICATION_JSON)) .andExpect(status().isOk())
+	  .andExpect(content().string(
+	  equalTo("{\"num\":\"123.3434\",\"word\":\"Decimal numbers not considered for conversion\"}"))); }
+	 
 	
 	/*Test for leading zeroes which are not considered*/
 	@Test
@@ -205,8 +204,14 @@ public class SpringAssignmentApplicationTests {
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/nums/-1:0:999999999:1000000000:7893456:-3743:0004500:ABCD:!*009").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[{\"num\":\"-1\",\"word\":\"Input is expected between 0 and 999999999\"}"
-                		+ ",{\"num\":\"0\",\"word\":\"zero\"},{\"num\":\"999999999\",\"word\":\"nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine\"},{\"num\":\"1000000000\",\"word\":\"Input is expected between 0 and 999999999\"},{\"num\":\"7893456\",\"word\":\"seven million eight hundred ninety three thousand four hundred fifty six\"},{\"num\":\"-3743\",\"word\":\"Input is expected between 0 and 999999999\"},{\"num\":\"0004500\",\"word\":\"four thousand five hundred\"},{\"num\":\"ABCD\",\"word\":\"not a valid number\"}"
+                .andExpect(content().string(equalTo("[{\"num\":\"-1\",\"word\":\"Number not in the range 0 and 999999999\"}"
+                		+ ",{\"num\":\"0\",\"word\":\"zero\"}"
+                		+ ",{\"num\":\"999999999\",\"word\":\"nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine\"}"
+                		+ ",{\"num\":\"1000000000\",\"word\":\"Number not in the range 0 and 999999999\"}"
+                		+ ",{\"num\":\"7893456\",\"word\":\"seven million eight hundred ninety three thousand four hundred fifty six\"}"
+                		+ ",{\"num\":\"-3743\",\"word\":\"Number not in the range 0 and 999999999\"}"
+                		+ ",{\"num\":\"0004500\",\"word\":\"four thousand five hundred\"}"
+                		+ ",{\"num\":\"ABCD\",\"word\":\"not a valid number\"}"
                 		+ ",{\"num\":\"!*009\",\"word\":\"not a valid number\"}]")));
 	}
 
